@@ -1,0 +1,197 @@
+---
+const nombre = "Sergio";
+const comoLlamarte = "Sergio"; // cómo te gusta que te llamen
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{nombre} — Portafolio</title>
+	</head>
+	<body>
+		<header class="hero">
+			<p class="eyebrow">Portafolio profesional</p>
+			<h1>Hola, soy {comoLlamarte}</h1>
+			<p class="tagline">Bases de Datos 2 · Espacio profesional</p>
+		</header>
+
+		<main>
+			<!-- SECCIÓN: SOBRE MÍ -->
+			<section id="sobre-mi">
+				<h2>Sobre mí</h2>
+				<p>
+					Escribe aquí 2-3 líneas: tu hobby, algo que te represente,
+					o un interés (música, deporte, lo que sea).
+				</p>
+			</section>
+
+			<!-- SECCIÓN: PRESENTACIÓN (video obligatorio) -->
+			<section id="presentacion">
+				<h2>Presentación</h2>
+
+				<div class="video-wrapper">
+					<!-- Reemplaza TU-ID-DE-VIDEO con el ID de tu video de YouTube -->
+					<iframe
+						src="https://www.youtube.com/embed/TU-ID-DE-VIDEO"
+						title="Video de presentación"
+						frameborder="0"
+						allowfullscreen
+					></iframe>
+				</div>
+
+				<img
+					class="avatar"
+					src="/avatar.jpg"
+					alt={`Foto de ${comoLlamarte}`}
+				/>
+
+				<blockquote>
+					Este semestre quiero demostrar que...
+				</blockquote>
+			</section>
+
+			<!-- SECCIÓN: EVIDENCIAS (menú, vacío por ahora) -->
+			<section id="evidencias">
+				<h2>Evidencias</h2>
+				<nav class="evidencias-menu">
+					<a href="#sql">SQL</a>
+					<a href="#plsql">PL/SQL Scripts</a>
+					<a href="#nosql">NoSQL</a>
+					<a href="#proyecto">Proyecto</a>
+				</nav>
+				<p class="nota">Esta sección se irá llenando durante el semestre.</p>
+			</section>
+		</main>
+
+		<footer>
+			<p>{nombre} Valderrama • Ingeniería de Sistemas • {new Date().getFullYear()}</p>
+		</footer>
+	</body>
+</html>
+
+<style>
+	:root {
+		--bg: #0f1115;
+		--surface: #171a21;
+		--text: #eaeaea;
+		--muted: #9aa1ac;
+		--accent: #5eead4;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		margin: 0;
+		font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+		background: var(--bg);
+		color: var(--text);
+		line-height: 1.6;
+	}
+
+	.hero {
+		padding: 4rem 1.5rem 3rem;
+		text-align: center;
+	}
+
+	.eyebrow {
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		font-size: 0.75rem;
+		color: var(--accent);
+		margin: 0 0 0.5rem;
+	}
+
+	.hero h1 {
+		font-size: 2.5rem;
+		margin: 0 0 0.5rem;
+	}
+
+	.tagline {
+		color: var(--muted);
+		margin: 0;
+	}
+
+	main {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 0 1.5rem 4rem;
+	}
+
+	section {
+		background: var(--surface);
+		border-radius: 12px;
+		padding: 2rem;
+		margin-bottom: 1.5rem;
+	}
+
+	section h2 {
+		margin-top: 0;
+		font-size: 1.25rem;
+	}
+
+	.video-wrapper {
+		position: relative;
+		width: 100%;
+		padding-top: 56.25%; /* 16:9 */
+		border-radius: 8px;
+		overflow: hidden;
+		margin: 1rem 0;
+	}
+
+	.video-wrapper iframe {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
+	.avatar {
+		width: 96px;
+		height: 96px;
+		border-radius: 50%;
+		object-fit: cover;
+		display: block;
+		margin: 1rem 0;
+	}
+
+	blockquote {
+		border-left: 3px solid var(--accent);
+		margin: 1.5rem 0 0;
+		padding-left: 1rem;
+		color: var(--muted);
+		font-style: italic;
+	}
+
+	.evidencias-menu {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.evidencias-menu a {
+		color: var(--accent);
+		text-decoration: none;
+		border: 1px solid var(--accent);
+		border-radius: 999px;
+		padding: 0.4rem 1rem;
+		font-size: 0.9rem;
+	}
+
+	.nota {
+		color: var(--muted);
+		font-size: 0.9rem;
+		margin-top: 1rem;
+		margin-bottom: 0;
+	}
+
+	footer {
+		text-align: center;
+		color: var(--muted);
+		font-size: 0.85rem;
+		padding-bottom: 2rem;
+	}
+</style>
