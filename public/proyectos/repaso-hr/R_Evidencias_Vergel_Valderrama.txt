@@ -1,0 +1,1883 @@
+
+===== A. CASOS BORDE DEL ESQUEMA =====
+
+CASO_BORDE                  EMPLEADOS_AFECTADOS DESCRIPCION
+--------------------------- ------------------- ------------------------------------------------------------
+Empleado sin jefe                             1 Empleados cuyo manager_id es NULL: no tienen jefe registrado
+Empleado sin departamento                     1 Empleados cuyo department_id es NULL
+Empleados sin comision                       72 Empleados cuyo commission_pct es NULL
+Departamentos sin empleados                  16 Departamentos sin ningun empleado asociado
+
+
+===== B.1 INVENTARIO DE DEPARTAMENTOS =====
+
+DEPARTMENT_ID DEPARTMENT_NAME                CITY                           COUNTRY_NAME                                                 EMPLOYEE_COUNT AVG_SALARY
+------------- ------------------------------ ------------------------------ ------------------------------------------------------------ -------------- ----------
+           10 Administration                 Seattle                        United States of America                                                  1       4400
+           20 Marketing                      Toronto                        Canada                                                                    2       9500
+           30 Purchasing                     Seattle                        United States of America                                                  6       4150
+           40 Human Resources                London                         United Kingdom of Great Britain and Northern Ireland                      1       6500
+           50 Shipping                       South San Francisco            United States of America                                                 45    3475.56
+           60 IT                             Southlake                      United States of America                                                  5       5760
+           70 Public Relations               Munich                         Germany                                                                   1      10000
+           80 Sales                          Oxford                         United Kingdom of Great Britain and Northern Ireland                     34    8955.88
+           90 Executive                      Seattle                        United States of America                                                  3   19333.33
+          100 Finance                        Seattle                        United States of America                                                  6    8601.33
+          110 Accounting                     Seattle                        United States of America                                                  2      10154
+          120 Treasury                       Seattle                        United States of America                                                  0
+          130 Corporate Tax                  Seattle                        United States of America                                                  0
+          140 Control And Credit             Seattle                        United States of America                                                  0
+          150 Shareholder Services           Seattle                        United States of America                                                  0
+          160 Benefits                       Seattle                        United States of America                                                  0
+          170 Manufacturing                  Seattle                        United States of America                                                  0
+          180 Construction                   Seattle                        United States of America                                                  0
+          190 Contracting                    Seattle                        United States of America                                                  0
+          200 Operations                     Seattle                        United States of America                                                  0
+          210 IT Support                     Seattle                        United States of America                                                  0
+          220 NOC                            Seattle                        United States of America                                                  0
+          230 IT Helpdesk                    Seattle                        United States of America                                                  0
+          240 Government Sales               Seattle                        United States of America                                                  0
+          250 Retail Sales                   Seattle                        United States of America                                                  0
+          260 Recruiting                     Seattle                        United States of America                                                  0
+          270 Payroll                        Seattle                        United States of America                                                  0
+
+27 rows selected.
+
+
+===== B.2 CADENA DE MANDO =====
+
+EMPLOYEE_ID EMPLOYEE_NAME                                  JOB_TITLE                           MANAGER_ID MANAGER_NAME                                   DEPARTMENT_NAME
+----------- ---------------------------------------------- ----------------------------------- ---------- ---------------------------------------------- ------------------------------
+        100 Steven King                                    President                                                                                     Executive
+        101 Neena Yang                                     Administration Vice President              100 Steven King                                    Executive
+        102 Lex Garcia                                     Administration Vice President              100 Steven King                                    Executive
+        103 Alexander James                                Programmer                                 102 Lex Garcia                                     IT
+        104 Bruce Miller                                   Programmer                                 103 Alexander James                                IT
+        105 David Williams                                 Programmer                                 103 Alexander James                                IT
+        106 Valli Jackson                                  Programmer                                 103 Alexander James                                IT
+        107 Diana Nguyen                                   Programmer                                 103 Alexander James                                IT
+        108 Nancy Gruenberg                                Finance Manager                            101 Neena Yang                                     Finance
+        109 Daniel Faviet                                  Accountant                                 108 Nancy Gruenberg                                Finance
+        110 John Chen                                      Accountant                                 108 Nancy Gruenberg                                Finance
+        111 Ismael Sciarra                                 Accountant                                 108 Nancy Gruenberg                                Finance
+        112 Jose Manuel Urman                              Accountant                                 108 Nancy Gruenberg                                Finance
+        113 Luis Popp                                      Accountant                                 108 Nancy Gruenberg                                Finance
+        114 Den Li                                         Purchasing Manager                         100 Steven King                                    Purchasing
+        115 Alexander Khoo                                 Purchasing Clerk                           114 Den Li                                         Purchasing
+        116 Shelli Baida                                   Purchasing Clerk                           114 Den Li                                         Purchasing
+        117 Sigal Tobias                                   Purchasing Clerk                           114 Den Li                                         Purchasing
+        118 Guy Himuro                                     Purchasing Clerk                           114 Den Li                                         Purchasing
+        119 Karen Colmenares                               Purchasing Clerk                           114 Den Li                                         Purchasing
+        120 Matthew Weiss                                  Stock Manager                              100 Steven King                                    Shipping
+        121 Adam Fripp                                     Stock Manager                              100 Steven King                                    Shipping
+        122 Payam Kaufling                                 Stock Manager                              100 Steven King                                    Shipping
+        123 Shanta Vollman                                 Stock Manager                              100 Steven King                                    Shipping
+        124 Kevin Mourgos                                  Stock Manager                              100 Steven King                                    Shipping
+        125 Julia Nayer                                    Stock Clerk                                120 Matthew Weiss                                  Shipping
+        126 Irene Mikkilineni                              Stock Clerk                                120 Matthew Weiss                                  Shipping
+        127 James Landry                                   Stock Clerk                                120 Matthew Weiss                                  Shipping
+        128 Steven Markle                                  Stock Clerk                                120 Matthew Weiss                                  Shipping
+        129 Laura Bissot                                   Stock Clerk                                121 Adam Fripp                                     Shipping
+        130 Mozhe Atkinson                                 Stock Clerk                                121 Adam Fripp                                     Shipping
+        131 James Marlow                                   Stock Clerk                                121 Adam Fripp                                     Shipping
+        132 TJ Olson                                       Stock Clerk                                121 Adam Fripp                                     Shipping
+        133 Jason Mallin                                   Stock Clerk                                122 Payam Kaufling                                 Shipping
+        134 Michael Rogers                                 Stock Clerk                                122 Payam Kaufling                                 Shipping
+        135 Ki Gee                                         Stock Clerk                                122 Payam Kaufling                                 Shipping
+        136 Hazel Philtanker                               Stock Clerk                                122 Payam Kaufling                                 Shipping
+        137 Renske Ladwig                                  Stock Clerk                                123 Shanta Vollman                                 Shipping
+        138 Stephen Stiles                                 Stock Clerk                                123 Shanta Vollman                                 Shipping
+        139 John Seo                                       Stock Clerk                                123 Shanta Vollman                                 Shipping
+        140 Joshua Patel                                   Stock Clerk                                123 Shanta Vollman                                 Shipping
+        141 Trenna Rajs                                    Stock Clerk                                124 Kevin Mourgos                                  Shipping
+        142 Curtis Davies                                  Stock Clerk                                124 Kevin Mourgos                                  Shipping
+        143 Randall Matos                                  Stock Clerk                                124 Kevin Mourgos                                  Shipping
+        144 Peter Vargas                                   Stock Clerk                                124 Kevin Mourgos                                  Shipping
+        145 John Singh                                     Sales Manager                              100 Steven King                                    Sales
+        146 Karen Partners                                 Sales Manager                              100 Steven King                                    Sales
+        147 Alberto Errazuriz                              Sales Manager                              100 Steven King                                    Sales
+        148 Gerald Cambrault                               Sales Manager                              100 Steven King                                    Sales
+        149 Eleni Zlotkey                                  Sales Manager                              100 Steven King                                    Sales
+        150 Sean Tucker                                    Sales Representative                       145 John Singh                                     Sales
+        151 David Bernstein                                Sales Representative                       145 John Singh                                     Sales
+        152 Peter Hall                                     Sales Representative                       145 John Singh                                     Sales
+        153 Christopher Olsen                              Sales Representative                       145 John Singh                                     Sales
+        154 Nanette Cambrault                              Sales Representative                       145 John Singh                                     Sales
+        155 Oliver Tuvault                                 Sales Representative                       145 John Singh                                     Sales
+        156 Janette King                                   Sales Representative                       146 Karen Partners                                 Sales
+        157 Patrick Sully                                  Sales Representative                       146 Karen Partners                                 Sales
+        158 Allan McEwen                                   Sales Representative                       146 Karen Partners                                 Sales
+        159 Lindsey Smith                                  Sales Representative                       146 Karen Partners                                 Sales
+        160 Louise Doran                                   Sales Representative                       146 Karen Partners                                 Sales
+        161 Sarath Sewall                                  Sales Representative                       146 Karen Partners                                 Sales
+        162 Clara Vishney                                  Sales Representative                       147 Alberto Errazuriz                              Sales
+        163 Danielle Greene                                Sales Representative                       147 Alberto Errazuriz                              Sales
+        164 Mattea Marvins                                 Sales Representative                       147 Alberto Errazuriz                              Sales
+        165 David Lee                                      Sales Representative                       147 Alberto Errazuriz                              Sales
+        166 Sundar Ande                                    Sales Representative                       147 Alberto Errazuriz                              Sales
+        167 Amit Banda                                     Sales Representative                       147 Alberto Errazuriz                              Sales
+        168 Lisa Ozer                                      Sales Representative                       148 Gerald Cambrault                               Sales
+        169 Harrison Bloom                                 Sales Representative                       148 Gerald Cambrault                               Sales
+        170 Tayler Fox                                     Sales Representative                       148 Gerald Cambrault                               Sales
+        171 William Smith                                  Sales Representative                       148 Gerald Cambrault                               Sales
+        172 Elizabeth Bates                                Sales Representative                       148 Gerald Cambrault                               Sales
+        173 Sundita Kumar                                  Sales Representative                       148 Gerald Cambrault                               Sales
+        174 Ellen Abel                                     Sales Representative                       149 Eleni Zlotkey                                  Sales
+        175 Alyssa Hutton                                  Sales Representative                       149 Eleni Zlotkey                                  Sales
+        176 Jonathon Taylor                                Sales Representative                       149 Eleni Zlotkey                                  Sales
+        177 Jack Livingston                                Sales Representative                       149 Eleni Zlotkey                                  Sales
+        178 Kimberely Grant                                Sales Representative                       149 Eleni Zlotkey
+        179 Charles Johnson                                Sales Representative                       149 Eleni Zlotkey                                  Sales
+        180 Winston Taylor                                 Shipping Clerk                             120 Matthew Weiss                                  Shipping
+        181 Jean Fleaur                                    Shipping Clerk                             120 Matthew Weiss                                  Shipping
+        182 Martha Sullivan                                Shipping Clerk                             120 Matthew Weiss                                  Shipping
+        183 Girard Geoni                                   Shipping Clerk                             120 Matthew Weiss                                  Shipping
+        184 Nandita Sarchand                               Shipping Clerk                             121 Adam Fripp                                     Shipping
+        185 Alexis Bull                                    Shipping Clerk                             121 Adam Fripp                                     Shipping
+        186 Julia Dellinger                                Shipping Clerk                             121 Adam Fripp                                     Shipping
+        187 Anthony Cabrio                                 Shipping Clerk                             121 Adam Fripp                                     Shipping
+        188 Kelly Chung                                    Shipping Clerk                             122 Payam Kaufling                                 Shipping
+        189 Jennifer Dilly                                 Shipping Clerk                             122 Payam Kaufling                                 Shipping
+        190 Timothy Venzl                                  Shipping Clerk                             122 Payam Kaufling                                 Shipping
+        191 Randall Perkins                                Shipping Clerk                             122 Payam Kaufling                                 Shipping
+        192 Sarah Bell                                     Shipping Clerk                             123 Shanta Vollman                                 Shipping
+        193 Britney Everett                                Shipping Clerk                             123 Shanta Vollman                                 Shipping
+        194 Samuel McLeod                                  Shipping Clerk                             123 Shanta Vollman                                 Shipping
+        195 Vance Jones                                    Shipping Clerk                             123 Shanta Vollman                                 Shipping
+        196 Alana Walsh                                    Shipping Clerk                             124 Kevin Mourgos                                  Shipping
+        197 Kevin Feeney                                   Shipping Clerk                             124 Kevin Mourgos                                  Shipping
+        198 Donald OConnell                                Shipping Clerk                             124 Kevin Mourgos                                  Shipping
+        199 Douglas Grant                                  Shipping Clerk                             124 Kevin Mourgos                                  Shipping
+        200 Jennifer Whalen                                Administration Assistant                   101 Neena Yang                                     Administration
+        201 Michael Martinez                               Marketing Manager                          100 Steven King                                    Marketing
+        202 Pat Davis                                      Marketing Representative                   201 Michael Martinez                               Marketing
+        203 Susan Jacobs                                   Human Resources Representative             101 Neena Yang                                     Human Resources
+        204 Hermann Brown                                  Public Relations Representative            101 Neena Yang                                     Public Relations
+        205 Shelley Higgins                                Accounting Manager                         101 Neena Yang                                     Accounting
+        206 William Gietz                                  Public Accountant                          205 Shelley Higgins                                Accounting
+
+107 rows selected.
+
+
+===== B.3 VARIANTE CON LA CONDICION EN ON =====
+
+DEPARTMENT_NAME                LAST_NAME                     SALARY
+------------------------------ ------------------------- ----------
+Accounting                     Higgins                        12008
+Administration
+Benefits
+Construction
+Contracting
+Control And Credit
+Corporate Tax
+Executive                      Garcia                         17000
+Executive                      King                           24000
+Executive                      Yang                           17000
+Finance                        Gruenberg                      12008
+Government Sales
+Human Resources
+IT
+IT Helpdesk
+IT Support
+Manufacturing
+Marketing                      Martinez                       13000
+NOC
+Operations
+Payroll
+Public Relations
+Purchasing                     Li                             11000
+Recruiting
+Retail Sales
+Sales                          Errazuriz                      12000
+Sales                          Abel                           11000
+Sales                          Ozer                           11500
+Sales                          Vishney                        10500
+Sales                          Zlotkey                        10500
+Sales                          Cambrault                      11000
+Sales                          Partners                       13500
+Sales                          Singh                          14000
+Shareholder Services
+Shipping
+Treasury
+
+36 rows selected.
+
+
+===== B.3 VARIANTE CON LA CONDICION EN WHERE =====
+
+DEPARTMENT_NAME                LAST_NAME                     SALARY
+------------------------------ ------------------------- ----------
+Accounting                     Higgins                        12008
+Executive                      Garcia                         17000
+Executive                      Yang                           17000
+Executive                      King                           24000
+Finance                        Gruenberg                      12008
+Marketing                      Martinez                       13000
+Purchasing                     Li                             11000
+Sales                          Singh                          14000
+Sales                          Partners                       13500
+Sales                          Cambrault                      11000
+Sales                          Vishney                        10500
+Sales                          Ozer                           11500
+Sales                          Abel                           11000
+Sales                          Errazuriz                      12000
+Sales                          Zlotkey                        10500
+
+15 rows selected.
+
+
+===== B.3 RESUMEN COMPARATIVO (variante, filas_devueltas, explicacion) =====
+
+VARIA FILAS_DEVUELTAS EXPLICACION
+----- --------------- ------------------------------------------------------------------------------------------------
+ON                 36 Filtro en ON: se aplica antes de unir, conserva todos los departamentos
+WHERE              15 Filtro en WHERE: se aplica despues de unir, elimina los NULL y degrada el LEFT JOIN a INNER JOIN
+
+
+===== C.1 DIAGNOSTICO DE NULOS =====
+
+EMPLOYEE_ID LAST_NAME                 DEPARTMENT_ID     SALARY COMMISSION_PCT TOTAL_COMPENSATION ES
+----------- ------------------------- ------------- ---------- -------------- ------------------ --
+        100 King                                 90      24000                             24000 SI
+        101 Yang                                 90      17000                             17000 SI
+        102 Garcia                               90      17000                             17000 SI
+        103 James                                60       9000                              9000 SI
+        104 Miller                               60       6000                              6000 NO
+        105 Williams                             60       4800                              4800 NO
+        106 Jackson                              60       4800                              4800 NO
+        107 Nguyen                               60       4200                              4200 NO
+        108 Gruenberg                           100      12008                             12008 SI
+        109 Faviet                              100       9000                              9000 NO
+        110 Chen                                100       8200                              8200 NO
+        111 Sciarra                             100       7700                              7700 NO
+        112 Urman                               100       7800                              7800 NO
+        113 Popp                                100       6900                              6900 NO
+        114 Li                                   30      11000                             11000 SI
+        115 Khoo                                 30       3100                              3100 NO
+        116 Baida                                30       2900                              2900 NO
+        117 Tobias                               30       2800                              2800 NO
+        118 Himuro                               30       2600                              2600 NO
+        119 Colmenares                           30       2500                              2500 NO
+        120 Weiss                                50       8000                              8000 SI
+        121 Fripp                                50       8200                              8200 SI
+        122 Kaufling                             50       7900                              7900 SI
+        123 Vollman                              50       6500                              6500 SI
+        124 Mourgos                              50       5800                              5800 SI
+        125 Nayer                                50       3200                              3200 NO
+        126 Mikkilineni                          50       2700                              2700 NO
+        127 Landry                               50       2400                              2400 NO
+        128 Markle                               50       2200                              2200 NO
+        129 Bissot                               50       3300                              3300 NO
+        130 Atkinson                             50       2800                              2800 NO
+        131 Marlow                               50       2500                              2500 NO
+        132 Olson                                50       2100                              2100 NO
+        133 Mallin                               50       3300                              3300 NO
+        134 Rogers                               50       2900                              2900 NO
+        135 Gee                                  50       2400                              2400 NO
+        136 Philtanker                           50       2200                              2200 NO
+        137 Ladwig                               50       3600                              3600 NO
+        138 Stiles                               50       3200                              3200 NO
+        139 Seo                                  50       2700                              2700 NO
+        140 Patel                                50       2500                              2500 NO
+        141 Rajs                                 50       3500                              3500 NO
+        142 Davies                               50       3100                              3100 NO
+        143 Matos                                50       2600                              2600 NO
+        144 Vargas                               50       2500                              2500 NO
+        145 Singh                                80      14000             .4              19600 SI
+        146 Partners                             80      13500             .3              17550 SI
+        147 Errazuriz                            80      12000             .3              15600 SI
+        148 Cambrault                            80      11000             .3              14300 SI
+        149 Zlotkey                              80      10500             .2              12600 SI
+        150 Tucker                               80      10000             .3              13000 NO
+        151 Bernstein                            80       9500            .25              11875 NO
+        152 Hall                                 80       9000            .25              11250 NO
+        153 Olsen                                80       8000             .2               9600 NO
+        154 Cambrault                            80       7500             .2               9000 NO
+        155 Tuvault                              80       7000            .15               8050 NO
+        156 King                                 80      10000            .35              13500 NO
+        157 Sully                                80       9500            .35              12825 NO
+        158 McEwen                               80       9000            .35              12150 NO
+        159 Smith                                80       8000             .3              10400 NO
+        160 Doran                                80       7500             .3               9750 NO
+        161 Sewall                               80       7000            .25               8750 NO
+        162 Vishney                              80      10500            .25              13125 NO
+        163 Greene                               80       9500            .15              10925 NO
+        164 Marvins                              80       7200             .1               7920 NO
+        165 Lee                                  80       6800             .1               7480 NO
+        166 Ande                                 80       6400             .1               7040 NO
+        167 Banda                                80       6200             .1               6820 NO
+        168 Ozer                                 80      11500            .25              14375 NO
+        169 Bloom                                80      10000             .2              12000 NO
+        170 Fox                                  80       9600             .2              11520 NO
+        171 Smith                                80       7400            .15               8510 NO
+        172 Bates                                80       7300            .15               8395 NO
+        173 Kumar                                80       6100             .1               6710 NO
+        174 Abel                                 80      11000             .3              14300 NO
+        175 Hutton                               80       8800            .25              11000 NO
+        176 Taylor                               80       8600             .2              10320 NO
+        177 Livingston                           80       8400             .2              10080 NO
+        178 Grant                                         7000            .15               8050 NO
+        179 Johnson                              80       6200             .1               6820 NO
+        180 Taylor                               50       3200                              3200 NO
+        181 Fleaur                               50       3100                              3100 NO
+        182 Sullivan                             50       2500                              2500 NO
+        183 Geoni                                50       2800                              2800 NO
+        184 Sarchand                             50       4200                              4200 NO
+        185 Bull                                 50       4100                              4100 NO
+        186 Dellinger                            50       3400                              3400 NO
+        187 Cabrio                               50       3000                              3000 NO
+        188 Chung                                50       3800                              3800 NO
+        189 Dilly                                50       3600                              3600 NO
+        190 Venzl                                50       2900                              2900 NO
+        191 Perkins                              50       2500                              2500 NO
+        192 Bell                                 50       4000                              4000 NO
+        193 Everett                              50       3900                              3900 NO
+        194 McLeod                               50       3200                              3200 NO
+        195 Jones                                50       2800                              2800 NO
+        196 Walsh                                50       3100                              3100 NO
+        197 Feeney                               50       3000                              3000 NO
+        198 OConnell                             50       2600                              2600 NO
+        199 Grant                                50       2600                              2600 NO
+        200 Whalen                               10       4400                              4400 NO
+        201 Martinez                             20      13000                             13000 SI
+        202 Davis                                20       6000                              6000 NO
+        203 Jacobs                               40       6500                              6500 NO
+        204 Brown                                70      10000                             10000 NO
+        205 Higgins                             110      12008                             12008 SI
+        206 Gietz                               110       8300                              8300 NO
+
+107 rows selected.
+
+
+===== C.2 EVIDENCIA DEL COMPORTAMIENTO DE NOT IN =====
+no rows selected
+
+===== D.1 AGREGACION CON FILTRADO DE GRUPOS =====
+
+DEPARTMENT_ID DEPARTMENT_NAME                EMPLOYEE_COUNT AVG_SALARY MIN_SALARY MAX_SALARY SALARY_MASS EMPLEADOS_RECIENTES
+------------- ------------------------------ -------------- ---------- ---------- ---------- ----------- -------------------
+           80 Sales                                      34    8955.88       6100      14000      304500                  34
+          100 Finance                                     6    8601.33       6900      12008       51608                   6
+
+
+===== E.1 VERSION CON SUBCONSULTA CORRELACIONADA =====
+
+EMPLOYEE_ID LAST_NAME                 DEPARTMENT_ID     SALARY DEPT_AVG_SALARY DIFF_VS_AVG PCT_VS_AVG
+----------- ------------------------- ------------- ---------- --------------- ----------- ----------
+        200 Whalen                               10       4400            4400           0          0
+        201 Martinez                             20      13000            9500        3500      36.84
+        202 Davis                                20       6000            9500       -3500     -36.84
+        114 Li                                   30      11000            4150        6850     165.06
+        115 Khoo                                 30       3100            4150       -1050      -25.3
+        116 Baida                                30       2900            4150       -1250     -30.12
+        117 Tobias                               30       2800            4150       -1350     -32.53
+        118 Himuro                               30       2600            4150       -1550     -37.35
+        119 Colmenares                           30       2500            4150       -1650     -39.76
+        203 Jacobs                               40       6500            6500           0          0
+        120 Weiss                                50       8000         3475.56     4524.44     130.18
+        121 Fripp                                50       8200         3475.56     4724.44     135.93
+        122 Kaufling                             50       7900         3475.56     4424.44      127.3
+        123 Vollman                              50       6500         3475.56     3024.44      87.02
+        124 Mourgos                              50       5800         3475.56     2324.44      66.88
+        125 Nayer                                50       3200         3475.56     -275.56      -7.93
+        126 Mikkilineni                          50       2700         3475.56     -775.56     -22.31
+        127 Landry                               50       2400         3475.56    -1075.56     -30.95
+        128 Markle                               50       2200         3475.56    -1275.56      -36.7
+        129 Bissot                               50       3300         3475.56     -175.56      -5.05
+        130 Atkinson                             50       2800         3475.56     -675.56     -19.44
+        131 Marlow                               50       2500         3475.56     -975.56     -28.07
+        132 Olson                                50       2100         3475.56    -1375.56     -39.58
+        133 Mallin                               50       3300         3475.56     -175.56      -5.05
+        134 Rogers                               50       2900         3475.56     -575.56     -16.56
+        135 Gee                                  50       2400         3475.56    -1075.56     -30.95
+        136 Philtanker                           50       2200         3475.56    -1275.56      -36.7
+        137 Ladwig                               50       3600         3475.56      124.44       3.58
+        138 Stiles                               50       3200         3475.56     -275.56      -7.93
+        139 Seo                                  50       2700         3475.56     -775.56     -22.31
+        140 Patel                                50       2500         3475.56     -975.56     -28.07
+        141 Rajs                                 50       3500         3475.56       24.44         .7
+        142 Davies                               50       3100         3475.56     -375.56     -10.81
+        143 Matos                                50       2600         3475.56     -875.56     -25.19
+        144 Vargas                               50       2500         3475.56     -975.56     -28.07
+        180 Taylor                               50       3200         3475.56     -275.56      -7.93
+        181 Fleaur                               50       3100         3475.56     -375.56     -10.81
+        182 Sullivan                             50       2500         3475.56     -975.56     -28.07
+        183 Geoni                                50       2800         3475.56     -675.56     -19.44
+        184 Sarchand                             50       4200         3475.56      724.44      20.84
+        185 Bull                                 50       4100         3475.56      624.44      17.97
+        186 Dellinger                            50       3400         3475.56      -75.56      -2.17
+        187 Cabrio                               50       3000         3475.56     -475.56     -13.68
+        188 Chung                                50       3800         3475.56      324.44       9.34
+        189 Dilly                                50       3600         3475.56      124.44       3.58
+        190 Venzl                                50       2900         3475.56     -575.56     -16.56
+        191 Perkins                              50       2500         3475.56     -975.56     -28.07
+        192 Bell                                 50       4000         3475.56      524.44      15.09
+        193 Everett                              50       3900         3475.56      424.44      12.21
+        194 McLeod                               50       3200         3475.56     -275.56      -7.93
+        195 Jones                                50       2800         3475.56     -675.56     -19.44
+        196 Walsh                                50       3100         3475.56     -375.56     -10.81
+        197 Feeney                               50       3000         3475.56     -475.56     -13.68
+        198 OConnell                             50       2600         3475.56     -875.56     -25.19
+        199 Grant                                50       2600         3475.56     -875.56     -25.19
+        103 James                                60       9000            5760        3240      56.25
+        104 Miller                               60       6000            5760         240       4.17
+        105 Williams                             60       4800            5760        -960     -16.67
+        106 Jackson                              60       4800            5760        -960     -16.67
+        107 Nguyen                               60       4200            5760       -1560     -27.08
+        204 Brown                                70      10000           10000           0          0
+        145 Singh                                80      14000         8955.88     5044.12      56.32
+        146 Partners                             80      13500         8955.88     4544.12      50.74
+        147 Errazuriz                            80      12000         8955.88     3044.12      33.99
+        148 Cambrault                            80      11000         8955.88     2044.12      22.82
+        149 Zlotkey                              80      10500         8955.88     1544.12      17.24
+        150 Tucker                               80      10000         8955.88     1044.12      11.66
+        151 Bernstein                            80       9500         8955.88      544.12       6.08
+        152 Hall                                 80       9000         8955.88       44.12        .49
+        153 Olsen                                80       8000         8955.88     -955.88     -10.67
+        154 Cambrault                            80       7500         8955.88    -1455.88     -16.26
+        155 Tuvault                              80       7000         8955.88    -1955.88     -21.84
+        156 King                                 80      10000         8955.88     1044.12      11.66
+        157 Sully                                80       9500         8955.88      544.12       6.08
+        158 McEwen                               80       9000         8955.88       44.12        .49
+        159 Smith                                80       8000         8955.88     -955.88     -10.67
+        160 Doran                                80       7500         8955.88    -1455.88     -16.26
+        161 Sewall                               80       7000         8955.88    -1955.88     -21.84
+        162 Vishney                              80      10500         8955.88     1544.12      17.24
+        163 Greene                               80       9500         8955.88      544.12       6.08
+        164 Marvins                              80       7200         8955.88    -1755.88     -19.61
+        165 Lee                                  80       6800         8955.88    -2155.88     -24.07
+        166 Ande                                 80       6400         8955.88    -2555.88     -28.54
+        167 Banda                                80       6200         8955.88    -2755.88     -30.77
+        168 Ozer                                 80      11500         8955.88     2544.12      28.41
+        169 Bloom                                80      10000         8955.88     1044.12      11.66
+        170 Fox                                  80       9600         8955.88      644.12       7.19
+        171 Smith                                80       7400         8955.88    -1555.88     -17.37
+        172 Bates                                80       7300         8955.88    -1655.88     -18.49
+        173 Kumar                                80       6100         8955.88    -2855.88     -31.89
+        174 Abel                                 80      11000         8955.88     2044.12      22.82
+        175 Hutton                               80       8800         8955.88     -155.88      -1.74
+        176 Taylor                               80       8600         8955.88     -355.88      -3.97
+        177 Livingston                           80       8400         8955.88     -555.88      -6.21
+        179 Johnson                              80       6200         8955.88    -2755.88     -30.77
+        100 King                                 90      24000        19333.33     4666.67      24.14
+        101 Yang                                 90      17000        19333.33    -2333.33     -12.07
+        102 Garcia                               90      17000        19333.33    -2333.33     -12.07
+        108 Gruenberg                           100      12008         8601.33     3406.67      39.61
+        109 Faviet                              100       9000         8601.33      398.67       4.63
+        110 Chen                                100       8200         8601.33     -401.33      -4.67
+        111 Sciarra                             100       7700         8601.33     -901.33     -10.48
+        112 Urman                               100       7800         8601.33     -801.33      -9.32
+        113 Popp                                100       6900         8601.33    -1701.33     -19.78
+        205 Higgins                             110      12008           10154        1854      18.26
+        206 Gietz                               110       8300           10154       -1854     -18.26
+        178 Grant                                         7000
+
+107 rows selected.
+
+
+===== E.2 VERSION CON EXPRESION COMUN DE TABLA =====
+
+EMPLOYEE_ID LAST_NAME                 DEPARTMENT_ID     SALARY DEPT_AVG_SALARY DIFF_VS_AVG PCT_VS_AVG
+----------- ------------------------- ------------- ---------- --------------- ----------- ----------
+        200 Whalen                               10       4400            4400           0          0
+        201 Martinez                             20      13000            9500        3500      36.84
+        202 Davis                                20       6000            9500       -3500     -36.84
+        114 Li                                   30      11000            4150        6850     165.06
+        115 Khoo                                 30       3100            4150       -1050      -25.3
+        116 Baida                                30       2900            4150       -1250     -30.12
+        117 Tobias                               30       2800            4150       -1350     -32.53
+        118 Himuro                               30       2600            4150       -1550     -37.35
+        119 Colmenares                           30       2500            4150       -1650     -39.76
+        203 Jacobs                               40       6500            6500           0          0
+        120 Weiss                                50       8000         3475.56     4524.44     130.18
+        121 Fripp                                50       8200         3475.56     4724.44     135.93
+        122 Kaufling                             50       7900         3475.56     4424.44      127.3
+        123 Vollman                              50       6500         3475.56     3024.44      87.02
+        124 Mourgos                              50       5800         3475.56     2324.44      66.88
+        125 Nayer                                50       3200         3475.56     -275.56      -7.93
+        126 Mikkilineni                          50       2700         3475.56     -775.56     -22.31
+        127 Landry                               50       2400         3475.56    -1075.56     -30.95
+        128 Markle                               50       2200         3475.56    -1275.56      -36.7
+        129 Bissot                               50       3300         3475.56     -175.56      -5.05
+        130 Atkinson                             50       2800         3475.56     -675.56     -19.44
+        131 Marlow                               50       2500         3475.56     -975.56     -28.07
+        132 Olson                                50       2100         3475.56    -1375.56     -39.58
+        133 Mallin                               50       3300         3475.56     -175.56      -5.05
+        134 Rogers                               50       2900         3475.56     -575.56     -16.56
+        135 Gee                                  50       2400         3475.56    -1075.56     -30.95
+        136 Philtanker                           50       2200         3475.56    -1275.56      -36.7
+        137 Ladwig                               50       3600         3475.56      124.44       3.58
+        138 Stiles                               50       3200         3475.56     -275.56      -7.93
+        139 Seo                                  50       2700         3475.56     -775.56     -22.31
+        140 Patel                                50       2500         3475.56     -975.56     -28.07
+        141 Rajs                                 50       3500         3475.56       24.44         .7
+        142 Davies                               50       3100         3475.56     -375.56     -10.81
+        143 Matos                                50       2600         3475.56     -875.56     -25.19
+        144 Vargas                               50       2500         3475.56     -975.56     -28.07
+        180 Taylor                               50       3200         3475.56     -275.56      -7.93
+        181 Fleaur                               50       3100         3475.56     -375.56     -10.81
+        182 Sullivan                             50       2500         3475.56     -975.56     -28.07
+        183 Geoni                                50       2800         3475.56     -675.56     -19.44
+        184 Sarchand                             50       4200         3475.56      724.44      20.84
+        185 Bull                                 50       4100         3475.56      624.44      17.97
+        186 Dellinger                            50       3400         3475.56      -75.56      -2.17
+        187 Cabrio                               50       3000         3475.56     -475.56     -13.68
+        188 Chung                                50       3800         3475.56      324.44       9.34
+        189 Dilly                                50       3600         3475.56      124.44       3.58
+        190 Venzl                                50       2900         3475.56     -575.56     -16.56
+        191 Perkins                              50       2500         3475.56     -975.56     -28.07
+        192 Bell                                 50       4000         3475.56      524.44      15.09
+        193 Everett                              50       3900         3475.56      424.44      12.21
+        194 McLeod                               50       3200         3475.56     -275.56      -7.93
+        195 Jones                                50       2800         3475.56     -675.56     -19.44
+        196 Walsh                                50       3100         3475.56     -375.56     -10.81
+        197 Feeney                               50       3000         3475.56     -475.56     -13.68
+        198 OConnell                             50       2600         3475.56     -875.56     -25.19
+        199 Grant                                50       2600         3475.56     -875.56     -25.19
+        103 James                                60       9000            5760        3240      56.25
+        104 Miller                               60       6000            5760         240       4.17
+        105 Williams                             60       4800            5760        -960     -16.67
+        106 Jackson                              60       4800            5760        -960     -16.67
+        107 Nguyen                               60       4200            5760       -1560     -27.08
+        204 Brown                                70      10000           10000           0          0
+        145 Singh                                80      14000         8955.88     5044.12      56.32
+        146 Partners                             80      13500         8955.88     4544.12      50.74
+        147 Errazuriz                            80      12000         8955.88     3044.12      33.99
+        148 Cambrault                            80      11000         8955.88     2044.12      22.82
+        149 Zlotkey                              80      10500         8955.88     1544.12      17.24
+        150 Tucker                               80      10000         8955.88     1044.12      11.66
+        151 Bernstein                            80       9500         8955.88      544.12       6.08
+        152 Hall                                 80       9000         8955.88       44.12        .49
+        153 Olsen                                80       8000         8955.88     -955.88     -10.67
+        154 Cambrault                            80       7500         8955.88    -1455.88     -16.26
+        155 Tuvault                              80       7000         8955.88    -1955.88     -21.84
+        156 King                                 80      10000         8955.88     1044.12      11.66
+        157 Sully                                80       9500         8955.88      544.12       6.08
+        158 McEwen                               80       9000         8955.88       44.12        .49
+        159 Smith                                80       8000         8955.88     -955.88     -10.67
+        160 Doran                                80       7500         8955.88    -1455.88     -16.26
+        161 Sewall                               80       7000         8955.88    -1955.88     -21.84
+        162 Vishney                              80      10500         8955.88     1544.12      17.24
+        163 Greene                               80       9500         8955.88      544.12       6.08
+        164 Marvins                              80       7200         8955.88    -1755.88     -19.61
+        165 Lee                                  80       6800         8955.88    -2155.88     -24.07
+        166 Ande                                 80       6400         8955.88    -2555.88     -28.54
+        167 Banda                                80       6200         8955.88    -2755.88     -30.77
+        168 Ozer                                 80      11500         8955.88     2544.12      28.41
+        169 Bloom                                80      10000         8955.88     1044.12      11.66
+        170 Fox                                  80       9600         8955.88      644.12       7.19
+        171 Smith                                80       7400         8955.88    -1555.88     -17.37
+        172 Bates                                80       7300         8955.88    -1655.88     -18.49
+        173 Kumar                                80       6100         8955.88    -2855.88     -31.89
+        174 Abel                                 80      11000         8955.88     2044.12      22.82
+        175 Hutton                               80       8800         8955.88     -155.88      -1.74
+        176 Taylor                               80       8600         8955.88     -355.88      -3.97
+        177 Livingston                           80       8400         8955.88     -555.88      -6.21
+        179 Johnson                              80       6200         8955.88    -2755.88     -30.77
+        100 King                                 90      24000        19333.33     4666.67      24.14
+        101 Yang                                 90      17000        19333.33    -2333.33     -12.07
+        102 Garcia                               90      17000        19333.33    -2333.33     -12.07
+        108 Gruenberg                           100      12008         8601.33     3406.67      39.61
+        109 Faviet                              100       9000         8601.33      398.67       4.63
+        110 Chen                                100       8200         8601.33     -401.33      -4.67
+        111 Sciarra                             100       7700         8601.33     -901.33     -10.48
+        112 Urman                               100       7800         8601.33     -801.33      -9.32
+        113 Popp                                100       6900         8601.33    -1701.33     -19.78
+        205 Higgins                             110      12008           10154        1854      18.26
+        206 Gietz                               110       8300           10154       -1854     -18.26
+
+106 rows selected.
+
+
+===== E.3 PLANES DE EJECUCION =====
+
+Explained.
+
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 787309246
+
+----------------------------------------------------------------------------------
+| Id  | Operation            | Name      | Rows  | Bytes | Cost (%CPU)| Time     |
+----------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT     |           |   340 | 14960 |     7  (15)| 00:00:01 |
+|*  1 |  HASH JOIN OUTER     |           |   340 | 14960 |     7  (15)| 00:00:01 |
+|   2 |   TABLE ACCESS FULL  | EMPLOYEES |   107 |  1926 |     3   (0)| 00:00:01 |
+|   3 |   VIEW               | VW_SSQ_1  |    11 |   286 |     4  (25)| 00:00:01 |
+|   4 |    HASH GROUP BY     |           |    11 |    77 |     4  (25)| 00:00:01 |
+|   5 |     TABLE ACCESS FULL| EMPLOYEES |   107 |   749 |     3   (0)| 00:00:01 |
+----------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - access("ITEM_1"(+)="E"."DEPARTMENT_ID")
+
+17 rows selected.
+
+
+Explained.
+
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Plan hash value: 2695105989
+
+----------------------------------------------------------------------------------
+| Id  | Operation            | Name      | Rows  | Bytes | Cost (%CPU)| Time     |
+----------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT     |           |   339 | 14916 |     7  (15)| 00:00:01 |
+|*  1 |  HASH JOIN           |           |   339 | 14916 |     7  (15)| 00:00:01 |
+|   2 |   VIEW               |           |    11 |   286 |     4  (25)| 00:00:01 |
+|   3 |    HASH GROUP BY     |           |    11 |    77 |     4  (25)| 00:00:01 |
+|   4 |     TABLE ACCESS FULL| EMPLOYEES |   107 |   749 |     3   (0)| 00:00:01 |
+|   5 |   TABLE ACCESS FULL  | EMPLOYEES |   107 |  1926 |     3   (0)| 00:00:01 |
+----------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - access("E"."DEPARTMENT_ID"="DA"."DEPARTMENT_ID")
+
+Note
+-----
+   - this is an adaptive plan
+
+21 rows selected.
+
+
+===== F.1 MOVILIDAD CON INTERSECT Y MINUS =====
+
+EMPLOYEE_ID LAST_NAME                 MOVILIDAD_STA
+----------- ------------------------- -------------
+        101 Yang                      CON HISTORIAL
+        102 Garcia                    CON HISTORIAL
+        114 Li                        CON HISTORIAL
+        122 Kaufling                  CON HISTORIAL
+        176 Taylor                    CON HISTORIAL
+        200 Whalen                    CON HISTORIAL
+        201 Martinez                  CON HISTORIAL
+        100 King                      SIN HISTORIAL
+        103 James                     SIN HISTORIAL
+        104 Miller                    SIN HISTORIAL
+        105 Williams                  SIN HISTORIAL
+        106 Jackson                   SIN HISTORIAL
+        107 Nguyen                    SIN HISTORIAL
+        108 Gruenberg                 SIN HISTORIAL
+        109 Faviet                    SIN HISTORIAL
+        110 Chen                      SIN HISTORIAL
+        111 Sciarra                   SIN HISTORIAL
+        112 Urman                     SIN HISTORIAL
+        113 Popp                      SIN HISTORIAL
+        115 Khoo                      SIN HISTORIAL
+        116 Baida                     SIN HISTORIAL
+        117 Tobias                    SIN HISTORIAL
+        118 Himuro                    SIN HISTORIAL
+        119 Colmenares                SIN HISTORIAL
+        120 Weiss                     SIN HISTORIAL
+        121 Fripp                     SIN HISTORIAL
+        123 Vollman                   SIN HISTORIAL
+        124 Mourgos                   SIN HISTORIAL
+        125 Nayer                     SIN HISTORIAL
+        126 Mikkilineni               SIN HISTORIAL
+        127 Landry                    SIN HISTORIAL
+        128 Markle                    SIN HISTORIAL
+        129 Bissot                    SIN HISTORIAL
+        130 Atkinson                  SIN HISTORIAL
+        131 Marlow                    SIN HISTORIAL
+        132 Olson                     SIN HISTORIAL
+        133 Mallin                    SIN HISTORIAL
+        134 Rogers                    SIN HISTORIAL
+        135 Gee                       SIN HISTORIAL
+        136 Philtanker                SIN HISTORIAL
+        137 Ladwig                    SIN HISTORIAL
+        138 Stiles                    SIN HISTORIAL
+        139 Seo                       SIN HISTORIAL
+        140 Patel                     SIN HISTORIAL
+        141 Rajs                      SIN HISTORIAL
+        142 Davies                    SIN HISTORIAL
+        143 Matos                     SIN HISTORIAL
+        144 Vargas                    SIN HISTORIAL
+        145 Singh                     SIN HISTORIAL
+        146 Partners                  SIN HISTORIAL
+        147 Errazuriz                 SIN HISTORIAL
+        148 Cambrault                 SIN HISTORIAL
+        149 Zlotkey                   SIN HISTORIAL
+        150 Tucker                    SIN HISTORIAL
+        151 Bernstein                 SIN HISTORIAL
+        152 Hall                      SIN HISTORIAL
+        153 Olsen                     SIN HISTORIAL
+        154 Cambrault                 SIN HISTORIAL
+        155 Tuvault                   SIN HISTORIAL
+        156 King                      SIN HISTORIAL
+        157 Sully                     SIN HISTORIAL
+        158 McEwen                    SIN HISTORIAL
+        159 Smith                     SIN HISTORIAL
+        160 Doran                     SIN HISTORIAL
+        161 Sewall                    SIN HISTORIAL
+        162 Vishney                   SIN HISTORIAL
+        163 Greene                    SIN HISTORIAL
+        164 Marvins                   SIN HISTORIAL
+        165 Lee                       SIN HISTORIAL
+        166 Ande                      SIN HISTORIAL
+        167 Banda                     SIN HISTORIAL
+        168 Ozer                      SIN HISTORIAL
+        169 Bloom                     SIN HISTORIAL
+        170 Fox                       SIN HISTORIAL
+        171 Smith                     SIN HISTORIAL
+        172 Bates                     SIN HISTORIAL
+        173 Kumar                     SIN HISTORIAL
+        174 Abel                      SIN HISTORIAL
+        175 Hutton                    SIN HISTORIAL
+        177 Livingston                SIN HISTORIAL
+        178 Grant                     SIN HISTORIAL
+        179 Johnson                   SIN HISTORIAL
+        180 Taylor                    SIN HISTORIAL
+        181 Fleaur                    SIN HISTORIAL
+        182 Sullivan                  SIN HISTORIAL
+        183 Geoni                     SIN HISTORIAL
+        184 Sarchand                  SIN HISTORIAL
+        185 Bull                      SIN HISTORIAL
+        186 Dellinger                 SIN HISTORIAL
+        187 Cabrio                    SIN HISTORIAL
+        188 Chung                     SIN HISTORIAL
+        189 Dilly                     SIN HISTORIAL
+        190 Venzl                     SIN HISTORIAL
+        191 Perkins                   SIN HISTORIAL
+        192 Bell                      SIN HISTORIAL
+        193 Everett                   SIN HISTORIAL
+        194 McLeod                    SIN HISTORIAL
+        195 Jones                     SIN HISTORIAL
+        196 Walsh                     SIN HISTORIAL
+        197 Feeney                    SIN HISTORIAL
+        198 OConnell                  SIN HISTORIAL
+        199 Grant                     SIN HISTORIAL
+        202 Davis                     SIN HISTORIAL
+        203 Jacobs                    SIN HISTORIAL
+        204 Brown                     SIN HISTORIAL
+        205 Higgins                   SIN HISTORIAL
+        206 Gietz                     SIN HISTORIAL
+
+107 rows selected.
+
+
+===== F.2 VERSION EQUIVALENTE CON NOT EXISTS =====
+
+EMPLOYEE_ID LAST_NAME                 MOVILIDAD_STA
+----------- ------------------------- -------------
+        101 Yang                      CON HISTORIAL
+        102 Garcia                    CON HISTORIAL
+        114 Li                        CON HISTORIAL
+        122 Kaufling                  CON HISTORIAL
+        176 Taylor                    CON HISTORIAL
+        200 Whalen                    CON HISTORIAL
+        201 Martinez                  CON HISTORIAL
+        100 King                      SIN HISTORIAL
+        103 James                     SIN HISTORIAL
+        104 Miller                    SIN HISTORIAL
+        105 Williams                  SIN HISTORIAL
+        106 Jackson                   SIN HISTORIAL
+        107 Nguyen                    SIN HISTORIAL
+        108 Gruenberg                 SIN HISTORIAL
+        109 Faviet                    SIN HISTORIAL
+        110 Chen                      SIN HISTORIAL
+        111 Sciarra                   SIN HISTORIAL
+        112 Urman                     SIN HISTORIAL
+        113 Popp                      SIN HISTORIAL
+        115 Khoo                      SIN HISTORIAL
+        116 Baida                     SIN HISTORIAL
+        117 Tobias                    SIN HISTORIAL
+        118 Himuro                    SIN HISTORIAL
+        119 Colmenares                SIN HISTORIAL
+        120 Weiss                     SIN HISTORIAL
+        121 Fripp                     SIN HISTORIAL
+        123 Vollman                   SIN HISTORIAL
+        124 Mourgos                   SIN HISTORIAL
+        125 Nayer                     SIN HISTORIAL
+        126 Mikkilineni               SIN HISTORIAL
+        127 Landry                    SIN HISTORIAL
+        128 Markle                    SIN HISTORIAL
+        129 Bissot                    SIN HISTORIAL
+        130 Atkinson                  SIN HISTORIAL
+        131 Marlow                    SIN HISTORIAL
+        132 Olson                     SIN HISTORIAL
+        133 Mallin                    SIN HISTORIAL
+        134 Rogers                    SIN HISTORIAL
+        135 Gee                       SIN HISTORIAL
+        136 Philtanker                SIN HISTORIAL
+        137 Ladwig                    SIN HISTORIAL
+        138 Stiles                    SIN HISTORIAL
+        139 Seo                       SIN HISTORIAL
+        140 Patel                     SIN HISTORIAL
+        141 Rajs                      SIN HISTORIAL
+        142 Davies                    SIN HISTORIAL
+        143 Matos                     SIN HISTORIAL
+        144 Vargas                    SIN HISTORIAL
+        145 Singh                     SIN HISTORIAL
+        146 Partners                  SIN HISTORIAL
+        147 Errazuriz                 SIN HISTORIAL
+        148 Cambrault                 SIN HISTORIAL
+        149 Zlotkey                   SIN HISTORIAL
+        150 Tucker                    SIN HISTORIAL
+        151 Bernstein                 SIN HISTORIAL
+        152 Hall                      SIN HISTORIAL
+        153 Olsen                     SIN HISTORIAL
+        154 Cambrault                 SIN HISTORIAL
+        155 Tuvault                   SIN HISTORIAL
+        156 King                      SIN HISTORIAL
+        157 Sully                     SIN HISTORIAL
+        158 McEwen                    SIN HISTORIAL
+        159 Smith                     SIN HISTORIAL
+        160 Doran                     SIN HISTORIAL
+        161 Sewall                    SIN HISTORIAL
+        162 Vishney                   SIN HISTORIAL
+        163 Greene                    SIN HISTORIAL
+        164 Marvins                   SIN HISTORIAL
+        165 Lee                       SIN HISTORIAL
+        166 Ande                      SIN HISTORIAL
+        167 Banda                     SIN HISTORIAL
+        168 Ozer                      SIN HISTORIAL
+        169 Bloom                     SIN HISTORIAL
+        170 Fox                       SIN HISTORIAL
+        171 Smith                     SIN HISTORIAL
+        172 Bates                     SIN HISTORIAL
+        173 Kumar                     SIN HISTORIAL
+        174 Abel                      SIN HISTORIAL
+        175 Hutton                    SIN HISTORIAL
+        177 Livingston                SIN HISTORIAL
+        178 Grant                     SIN HISTORIAL
+        179 Johnson                   SIN HISTORIAL
+        180 Taylor                    SIN HISTORIAL
+        181 Fleaur                    SIN HISTORIAL
+        182 Sullivan                  SIN HISTORIAL
+        183 Geoni                     SIN HISTORIAL
+        184 Sarchand                  SIN HISTORIAL
+        185 Bull                      SIN HISTORIAL
+        186 Dellinger                 SIN HISTORIAL
+        187 Cabrio                    SIN HISTORIAL
+        188 Chung                     SIN HISTORIAL
+        189 Dilly                     SIN HISTORIAL
+        190 Venzl                     SIN HISTORIAL
+        191 Perkins                   SIN HISTORIAL
+        192 Bell                      SIN HISTORIAL
+        193 Everett                   SIN HISTORIAL
+        194 McLeod                    SIN HISTORIAL
+        195 Jones                     SIN HISTORIAL
+        196 Walsh                     SIN HISTORIAL
+        197 Feeney                    SIN HISTORIAL
+        198 OConnell                  SIN HISTORIAL
+        199 Grant                     SIN HISTORIAL
+        202 Davis                     SIN HISTORIAL
+        203 Jacobs                    SIN HISTORIAL
+        204 Brown                     SIN HISTORIAL
+        205 Higgins                   SIN HISTORIAL
+        206 Gietz                     SIN HISTORIAL
+
+107 rows selected.
+
+
+===== G.1 JERARQUIA ORGANIZACIONAL =====
+
+EMPLOYEE_ID LAST_NAME                 MANAGER_ID      NIVEL
+----------- ------------------------- ---------- ----------
+RUTA_JERARQUICA
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        100 King                                          1
+King
+
+        101 Yang                             100          2
+King > Yang
+
+        102 Garcia                           100          2
+King > Garcia
+
+        114 Li                               100          2
+King > Li
+
+        120 Weiss                            100          2
+King > Weiss
+
+        121 Fripp                            100          2
+King > Fripp
+
+        122 Kaufling                         100          2
+King > Kaufling
+
+        123 Vollman                          100          2
+King > Vollman
+
+        124 Mourgos                          100          2
+King > Mourgos
+
+        145 Singh                            100          2
+King > Singh
+
+        146 Partners                         100          2
+King > Partners
+
+        147 Errazuriz                        100          2
+King > Errazuriz
+
+        148 Cambrault                        100          2
+King > Cambrault
+
+        149 Zlotkey                          100          2
+King > Zlotkey
+
+        201 Martinez                         100          2
+King > Martinez
+
+        103 James                            102          3
+King > Garcia > James
+
+        108 Gruenberg                        101          3
+King > Yang > Gruenberg
+
+        115 Khoo                             114          3
+King > Li > Khoo
+
+        116 Baida                            114          3
+King > Li > Baida
+
+        117 Tobias                           114          3
+King > Li > Tobias
+
+        118 Himuro                           114          3
+King > Li > Himuro
+
+        119 Colmenares                       114          3
+King > Li > Colmenares
+
+        125 Nayer                            120          3
+King > Weiss > Nayer
+
+        126 Mikkilineni                      120          3
+King > Weiss > Mikkilineni
+
+        127 Landry                           120          3
+King > Weiss > Landry
+
+        128 Markle                           120          3
+King > Weiss > Markle
+
+        129 Bissot                           121          3
+King > Fripp > Bissot
+
+        130 Atkinson                         121          3
+King > Fripp > Atkinson
+
+        131 Marlow                           121          3
+King > Fripp > Marlow
+
+        132 Olson                            121          3
+King > Fripp > Olson
+
+        133 Mallin                           122          3
+King > Kaufling > Mallin
+
+        134 Rogers                           122          3
+King > Kaufling > Rogers
+
+        135 Gee                              122          3
+King > Kaufling > Gee
+
+        136 Philtanker                       122          3
+King > Kaufling > Philtanker
+
+        137 Ladwig                           123          3
+King > Vollman > Ladwig
+
+        138 Stiles                           123          3
+King > Vollman > Stiles
+
+        139 Seo                              123          3
+King > Vollman > Seo
+
+        140 Patel                            123          3
+King > Vollman > Patel
+
+        141 Rajs                             124          3
+King > Mourgos > Rajs
+
+        142 Davies                           124          3
+King > Mourgos > Davies
+
+        143 Matos                            124          3
+King > Mourgos > Matos
+
+        144 Vargas                           124          3
+King > Mourgos > Vargas
+
+        150 Tucker                           145          3
+King > Singh > Tucker
+
+        151 Bernstein                        145          3
+King > Singh > Bernstein
+
+        152 Hall                             145          3
+King > Singh > Hall
+
+        153 Olsen                            145          3
+King > Singh > Olsen
+
+        154 Cambrault                        145          3
+King > Singh > Cambrault
+
+        155 Tuvault                          145          3
+King > Singh > Tuvault
+
+        156 King                             146          3
+King > Partners > King
+
+        157 Sully                            146          3
+King > Partners > Sully
+
+        158 McEwen                           146          3
+King > Partners > McEwen
+
+        159 Smith                            146          3
+King > Partners > Smith
+
+        160 Doran                            146          3
+King > Partners > Doran
+
+        161 Sewall                           146          3
+King > Partners > Sewall
+
+        162 Vishney                          147          3
+King > Errazuriz > Vishney
+
+        163 Greene                           147          3
+King > Errazuriz > Greene
+
+        164 Marvins                          147          3
+King > Errazuriz > Marvins
+
+        165 Lee                              147          3
+King > Errazuriz > Lee
+
+        166 Ande                             147          3
+King > Errazuriz > Ande
+
+        167 Banda                            147          3
+King > Errazuriz > Banda
+
+        168 Ozer                             148          3
+King > Cambrault > Ozer
+
+        169 Bloom                            148          3
+King > Cambrault > Bloom
+
+        170 Fox                              148          3
+King > Cambrault > Fox
+
+        171 Smith                            148          3
+King > Cambrault > Smith
+
+        172 Bates                            148          3
+King > Cambrault > Bates
+
+
+EMPLOYEE_ID LAST_NAME                 MANAGER_ID      NIVEL
+----------- ------------------------- ---------- ----------
+RUTA_JERARQUICA
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        173 Kumar                            148          3
+King > Cambrault > Kumar
+
+        174 Abel                             149          3
+King > Zlotkey > Abel
+
+        175 Hutton                           149          3
+King > Zlotkey > Hutton
+
+        176 Taylor                           149          3
+King > Zlotkey > Taylor
+
+        177 Livingston                       149          3
+King > Zlotkey > Livingston
+
+        178 Grant                            149          3
+King > Zlotkey > Grant
+
+        179 Johnson                          149          3
+King > Zlotkey > Johnson
+
+        180 Taylor                           120          3
+King > Weiss > Taylor
+
+        181 Fleaur                           120          3
+King > Weiss > Fleaur
+
+        182 Sullivan                         120          3
+King > Weiss > Sullivan
+
+        183 Geoni                            120          3
+King > Weiss > Geoni
+
+        184 Sarchand                         121          3
+King > Fripp > Sarchand
+
+        185 Bull                             121          3
+King > Fripp > Bull
+
+        186 Dellinger                        121          3
+King > Fripp > Dellinger
+
+        187 Cabrio                           121          3
+King > Fripp > Cabrio
+
+        188 Chung                            122          3
+King > Kaufling > Chung
+
+        189 Dilly                            122          3
+King > Kaufling > Dilly
+
+        190 Venzl                            122          3
+King > Kaufling > Venzl
+
+        191 Perkins                          122          3
+King > Kaufling > Perkins
+
+        192 Bell                             123          3
+King > Vollman > Bell
+
+        193 Everett                          123          3
+King > Vollman > Everett
+
+        194 McLeod                           123          3
+King > Vollman > McLeod
+
+        195 Jones                            123          3
+King > Vollman > Jones
+
+        196 Walsh                            124          3
+King > Mourgos > Walsh
+
+        197 Feeney                           124          3
+King > Mourgos > Feeney
+
+        198 OConnell                         124          3
+King > Mourgos > OConnell
+
+        199 Grant                            124          3
+King > Mourgos > Grant
+
+        200 Whalen                           101          3
+King > Yang > Whalen
+
+        202 Davis                            201          3
+King > Martinez > Davis
+
+        203 Jacobs                           101          3
+King > Yang > Jacobs
+
+        204 Brown                            101          3
+King > Yang > Brown
+
+        205 Higgins                          101          3
+King > Yang > Higgins
+
+        104 Miller                           103          4
+King > Garcia > James > Miller
+
+        105 Williams                         103          4
+King > Garcia > James > Williams
+
+        106 Jackson                          103          4
+King > Garcia > James > Jackson
+
+        107 Nguyen                           103          4
+King > Garcia > James > Nguyen
+
+        109 Faviet                           108          4
+King > Yang > Gruenberg > Faviet
+
+        110 Chen                             108          4
+King > Yang > Gruenberg > Chen
+
+        111 Sciarra                          108          4
+King > Yang > Gruenberg > Sciarra
+
+        112 Urman                            108          4
+King > Yang > Gruenberg > Urman
+
+        113 Popp                             108          4
+King > Yang > Gruenberg > Popp
+
+        206 Gietz                            205          4
+King > Yang > Higgins > Gietz
+
+
+107 rows selected.
+
+
+===== H.1 POSICIONAMIENTO SALARIAL =====
+
+EMPLOYEE_ID LAST_NAME                 DEPARTMENT_ID     SALARY         RN         RK        DRK PREV_SALARY DELTA_PREV SALARY_RUNNING_TOTAL DEPT_AVG_SALARY PCT_VS_DEPT_AVG
+----------- ------------------------- ------------- ---------- ---------- ---------- ---------- ----------- ---------- -------------------- --------------- ---------------
+        200 Whalen                               10       4400          1          1          1        4400          0                 4400            4400               0
+        201 Martinez                             20      13000          1          1          1       13000          0                13000            9500           36.84
+        202 Davis                                20       6000          2          2          2       13000      -7000                19000            9500          -36.84
+        114 Li                                   30      11000          1          1          1       11000          0                11000            4150          165.06
+        115 Khoo                                 30       3100          2          2          2       11000      -7900                14100            4150           -25.3
+        116 Baida                                30       2900          3          3          3        2800        100                19800            4150          -30.12
+        117 Tobias                               30       2800          4          4          4        3100       -300                16900            4150          -32.53
+        118 Himuro                               30       2600          5          5          5        2900       -300                22400            4150          -37.35
+        119 Colmenares                           30       2500          6          6          6        2600       -100                24900            4150          -39.76
+        203 Jacobs                               40       6500          1          1          1        6500          0                 6500            6500               0
+        121 Fripp                                50       8200          1          1          1        3900       4300                56300         3475.56          135.93
+        120 Weiss                                50       8000          2          2          2        3300       4700                34500         3475.56          130.18
+        122 Kaufling                             50       7900          3          3          3        7900          0                 7900         3475.56           127.3
+        123 Vollman                              50       6500          4          4          4        3300       3200                76700         3475.56           87.02
+        124 Mourgos                              50       5800          5          5          5        2600       3200               141700         3475.56           66.88
+        184 Sarchand                             50       4200          6          6          6        3500        700                19200         3475.56           20.84
+        185 Bull                                 50       4100          7          7          7        2500       1600                44200         3475.56           17.97
+        192 Bell                                 50       4000          8          8          8        4200       -200                23200         3475.56           15.09
+        193 Everett                              50       3900          9          9          9        4100       -200                48100         3475.56           12.21
+        188 Chung                                50       3800         10         10         10        8200      -4400                60100         3475.56            9.34
+        137 Ladwig                               50       3600         11         11         11        7900      -4300                11500         3475.56            3.58
+        189 Dilly                                50       3600         12         11         11        3200        400                66900         3475.56            3.58
+        141 Rajs                                 50       3500         13         13         12        3600       -100                15000         3475.56              .7
+        186 Dellinger                            50       3400         14         14         13        3000        400               106300         3475.56           -2.17
+        133 Mallin                               50       3300         15         15         14        4000       -700                26500         3475.56           -5.05
+        129 Bissot                               50       3300         16         15         14        3600       -300                70200         3475.56           -5.05
+        138 Stiles                               50       3200         17         17         15        6500      -3300                79900         3475.56           -7.93
+        125 Nayer                                50       3200         18         17         15        3800       -600                63300         3475.56           -7.93
+        194 McLeod                               50       3200         19         17         15        3400       -200               109500         3475.56           -7.93
+        180 Taylor                               50       3200         20         17         15        2800        400                85900         3475.56           -7.93
+        181 Fleaur                               50       3100         21         21         16        2700        400                91700         3475.56          -10.81
+        196 Walsh                                50       3100         22         21         16        2500        600                99900         3475.56          -10.81
+        142 Davies                               50       3100         23         21         16        8000      -4900                37600         3475.56          -10.81
+        197 Feeney                               50       3000         24         24         17        3100       -100               102900         3475.56          -13.68
+        187 Cabrio                               50       3000         25         24         17        2400        600               125900         3475.56          -13.68
+        134 Rogers                               50       2900         26         26         18        2900          0               117800         3475.56          -16.56
+        190 Venzl                                50       2900         27         26         18        2500        400               114900         3475.56          -16.56
+        130 Atkinson                             50       2800         28         28         19        3200       -400                82700         3475.56          -19.44
+        195 Jones                                50       2800         29         28         19        3000       -200               128700         3475.56          -19.44
+        183 Geoni                                50       2800         30         28         19        2600        200               152000         3475.56          -19.44
+        126 Mikkilineni                          50       2700         31         31         20        2900       -200               120500         3475.56          -22.31
+        139 Seo                                  50       2700         32         31         20        3200       -500                88600         3475.56          -22.31
+        143 Matos                                50       2600         33         33         21        3100       -500                94300         3475.56          -25.19
+        199 Grant                                50       2600         34         33         21        2500        100               149200         3475.56          -25.19
+        198 OConnell                             50       2600         35         33         21        2500        100               135900         3475.56          -25.19
+        182 Sullivan                             50       2500         36         36         22        2100        400               133300         3475.56          -28.07
+        140 Patel                                50       2500         37         36         22        2600       -100                96800         3475.56          -28.07
+        131 Marlow                               50       2500         38         36         22        3100       -600                40100         3475.56          -28.07
+        191 Perkins                              50       2500         39         36         22        2400        100               146600         3475.56          -28.07
+        144 Vargas                               50       2500         40         36         22        3200       -700               112000         3475.56          -28.07
+        135 Gee                                  50       2400         41         41         23        5800      -3400               144100         3475.56          -30.95
+        127 Landry                               50       2400         42         41         23        2700       -300               122900         3475.56          -30.95
+        136 Philtanker                           50       2200         43         43         24        2800       -600               154200         3475.56           -36.7
+        128 Markle                               50       2200         44         43         24        2200          0               156400         3475.56           -36.7
+        132 Olson                                50       2100         45         45         25        2800       -700               130800         3475.56          -39.58
+        103 James                                60       9000          1          1          1        4800       4200                13800            5760           56.25
+        104 Miller                               60       6000          2          2          2        4200       1800                28800            5760            4.17
+        105 Williams                             60       4800          3          3          3        4800          0                 4800            5760          -16.67
+        106 Jackson                              60       4800          4          3          3        9000      -4200                18600            5760          -16.67
+        107 Nguyen                               60       4200          5          5          4        4800       -600                22800            5760          -27.08
+        204 Brown                                70      10000          1          1          1       10000          0                10000           10000               0
+        145 Singh                                80      14000          1          1          1        9000       5000                53500         8955.88           56.32
+        146 Partners                             80      13500          2          2          2       14000       -500                67000         8955.88           50.74
+        147 Errazuriz                            80      12000          3          3          3       10000       2000                89000         8955.88           33.99
+        168 Ozer                                 80      11500          4          4          4        8000       3500               108500         8955.88           28.41
+        174 Abel                                 80      11000          5          5          5        9500       1500                30500         8955.88           22.82
+        148 Cambrault                            80      11000          6          5          5        7300       3700               248100         8955.88           22.82
+        149 Zlotkey                              80      10500          7          7          6        7200       3300               279000         8955.88           17.24
+        162 Vishney                              80      10500          8          7          6        9000       1500               146300         8955.88           17.24
+        156 King                                 80      10000          9          9          7       10000          0                10000         8955.88           11.66
+        169 Bloom                                80      10000         10          9          7        9600        400               173400         8955.88           11.66
+        150 Tucker                               80      10000         11          9          7       13500      -3500                77000         8955.88           11.66
+        170 Fox                                  80       9600         12         12          8        7500       2100               163400         8955.88            7.19
+        157 Sully                                80       9500         13         13          9       10000       -500                19500         8955.88            6.08
+        163 Greene                               80       9500         14         13          9        7400       2100               229800         8955.88            6.08
+        151 Bernstein                            80       9500         15         13          9        8800        700               126800         8955.88            6.08
+        152 Hall                                 80       9000         16         16         10        9500       -500               135800         8955.88             .49
+        158 McEwen                               80       9000         17         16         10       11000      -2000                39500         8955.88             .49
+        175 Hutton                               80       8800         18         18         11       11500      -2700               117300         8955.88           -1.74
+        176 Taylor                               80       8600         19         19         12       10000      -1400               182000         8955.88           -3.97
+        177 Livingston                           80       8400         20         20         13        8000        400               198400         8955.88           -6.21
+        153 Olsen                                80       8000         21         21         14        8600       -600               190000         8955.88          -10.67
+        159 Smith                                80       8000         22         21         14       12000      -4000                97000         8955.88          -10.67
+        154 Cambrault                            80       7500         23         23         15        7000        500               212900         8955.88          -16.26
+        160 Doran                                80       7500         24         23         15       10500      -3000               153800         8955.88          -16.26
+        171 Smith                                80       7400         25         25         16        7500       -100               220300         8955.88          -17.37
+        172 Bates                                80       7300         26         26         17        9500      -2200               237100         8955.88          -18.49
+        164 Marvins                              80       7200         27         27         18        6200       1000               268500         8955.88          -19.61
+        155 Tuvault                              80       7000         28         28         19       11000      -4000               255100         8955.88          -21.84
+        161 Sewall                               80       7000         29         28         19        8400      -1400               205400         8955.88          -21.84
+        165 Lee                                  80       6800         30         30         20       10500      -3700               285800         8955.88          -24.07
+        166 Ande                                 80       6400         31         31         21        6800       -400               292200         8955.88          -28.54
+        179 Johnson                              80       6200         32         32         22        7000       -800               261300         8955.88          -30.77
+        167 Banda                                80       6200         33         32         22        6400       -200               298400         8955.88          -30.77
+        173 Kumar                                80       6100         34         34         23        6200       -100               304500         8955.88          -31.89
+        100 King                                 90      24000          1          1          1       17000       7000                41000        19333.33           24.14
+        102 Garcia                               90      17000          2          2          2       17000          0                17000        19333.33          -12.07
+        101 Yang                                 90      17000          3          2          2       24000      -7000                58000        19333.33          -12.07
+        108 Gruenberg                           100      12008          1          1          1        9000       3008                21008         8601.33           39.61
+        109 Faviet                              100       9000          2          2          2        9000          0                 9000         8601.33            4.63
+        110 Chen                                100       8200          3          3          3       12008      -3808                29208         8601.33           -4.67
+        112 Urman                               100       7800          4          4          4        7700        100                44708         8601.33           -9.32
+        111 Sciarra                             100       7700          5          5          5        8200       -500                36908         8601.33          -10.48
+        113 Popp                                100       6900          6          6          6        7800       -900                51608         8601.33          -19.78
+        205 Higgins                             110      12008          1          1          1       12008          0                12008           10154           18.26
+        206 Gietz                               110       8300          2          2          2       12008      -3708                20308           10154          -18.26
+        178 Grant                                         7000          1          1          1        7000          0                 7000            7000               0
+
+107 rows selected.
+
+
+===== H.2 TOP 3 POR DEPARTAMENTO =====
+
+DEPARTMENT_ID DEPARTMENT_NAME                EMPLOYEE_ID LAST_NAME                     SALARY        DRK
+------------- ------------------------------ ----------- ------------------------- ---------- ----------
+           10 Administration                         200 Whalen                          4400          1
+           20 Marketing                              201 Martinez                       13000          1
+           20 Marketing                              202 Davis                           6000          2
+           30 Purchasing                             114 Li                             11000          1
+           30 Purchasing                             115 Khoo                            3100          2
+           30 Purchasing                             116 Baida                           2900          3
+           40 Human Resources                        203 Jacobs                          6500          1
+           50 Shipping                               121 Fripp                           8200          1
+           50 Shipping                               120 Weiss                           8000          2
+           50 Shipping                               122 Kaufling                        7900          3
+           60 IT                                     103 James                           9000          1
+           60 IT                                     104 Miller                          6000          2
+           60 IT                                     105 Williams                        4800          3
+           60 IT                                     106 Jackson                         4800          3
+           70 Public Relations                       204 Brown                          10000          1
+           80 Sales                                  145 Singh                          14000          1
+           80 Sales                                  146 Partners                       13500          2
+           80 Sales                                  147 Errazuriz                      12000          3
+           90 Executive                              100 King                           24000          1
+           90 Executive                              101 Yang                           17000          2
+           90 Executive                              102 Garcia                         17000          2
+          100 Finance                                108 Gruenberg                      12008          1
+          100 Finance                                109 Faviet                          9000          2
+          100 Finance                                110 Chen                            8200          3
+          110 Accounting                             205 Higgins                        12008          1
+          110 Accounting                             206 Gietz                           8300          2
+
+26 rows selected.
+
+
+===== I.1 DEFECTUOSA =====
+
+DEPARTMENT_NAME                EMPLOYEE_COUNT
+------------------------------ --------------
+Accounting                                  2
+Administration                              1
+Benefits                                    1
+Construction                                1
+Contracting                                 1
+Control And Credit                          1
+Corporate Tax                               1
+Executive                                   3
+Finance                                     6
+Government Sales                            1
+Human Resources                             1
+IT                                          5
+IT Helpdesk                                 1
+IT Support                                  1
+Manufacturing                               1
+Marketing                                   2
+NOC                                         1
+Operations                                  1
+Payroll                                     1
+Public Relations                            1
+Purchasing                                  6
+Recruiting                                  1
+Retail Sales                                1
+Sales                                      34
+Shareholder Services                        1
+Shipping                                   45
+Treasury                                    1
+
+27 rows selected.
+
+
+===== I.1 CORREGIDA =====
+
+DEPARTMENT_NAME                EMPLOYEE_COUNT
+------------------------------ --------------
+Accounting                                  2
+Administration                              1
+Benefits                                    0
+Construction                                0
+Contracting                                 0
+Control And Credit                          0
+Corporate Tax                               0
+Executive                                   3
+Finance                                     6
+Government Sales                            0
+Human Resources                             1
+IT                                          5
+IT Helpdesk                                 0
+IT Support                                  0
+Manufacturing                               0
+Marketing                                   2
+NOC                                         0
+Operations                                  0
+Payroll                                     0
+Public Relations                            1
+Purchasing                                  6
+Recruiting                                  0
+Retail Sales                                0
+Sales                                      34
+Shareholder Services                        0
+Shipping                                   45
+Treasury                                    0
+
+27 rows selected.
+
+
+===== I.2 DEFECTUOSA =====
+
+LAST_NAME                 DEPARTMENT_ID
+------------------------- -------------
+Jacobs                               40
+Atkinson                             50
+Bell                                 50
+Bissot                               50
+Bull                                 50
+Cabrio                               50
+Chung                                50
+Davies                               50
+Dellinger                            50
+Dilly                                50
+Everett                              50
+Feeney                               50
+Fleaur                               50
+Fripp                                50
+Gee                                  50
+Geoni                                50
+Grant                                50
+Jones                                50
+Kaufling                             50
+Ladwig                               50
+Landry                               50
+Mallin                               50
+Markle                               50
+Marlow                               50
+Matos                                50
+McLeod                               50
+Mikkilineni                          50
+Mourgos                              50
+Nayer                                50
+OConnell                             50
+Olson                                50
+Patel                                50
+Perkins                              50
+Philtanker                           50
+Rajs                                 50
+Rogers                               50
+Sarchand                             50
+Seo                                  50
+Stiles                               50
+Sullivan                             50
+Taylor                               50
+Vargas                               50
+Venzl                                50
+Vollman                              50
+Walsh                                50
+Weiss                                50
+Jackson                              60
+James                                60
+Miller                               60
+Nguyen                               60
+Williams                             60
+Brown                                70
+Abel                                 80
+Ande                                 80
+Banda                                80
+Bates                                80
+Bernstein                            80
+Bloom                                80
+Cambrault                            80
+Cambrault                            80
+Doran                                80
+Errazuriz                            80
+Fox                                  80
+Greene                               80
+Hall                                 80
+Hutton                               80
+Johnson                              80
+King                                 80
+Kumar                                80
+Lee                                  80
+Livingston                           80
+Marvins                              80
+McEwen                               80
+Olsen                                80
+Ozer                                 80
+Partners                             80
+Sewall                               80
+Singh                                80
+Smith                                80
+Smith                                80
+Sully                                80
+Taylor                               80
+Tucker                               80
+Tuvault                              80
+Vishney                              80
+Zlotkey                              80
+Garcia                               90
+King                                 90
+Yang                                 90
+Chen                                100
+Faviet                              100
+Gruenberg                           100
+Popp                                100
+Sciarra                             100
+Urman                               100
+Gietz                               110
+Higgins                             110
+
+97 rows selected.
+
+
+===== I.2 CORREGIDA =====
+
+LAST_NAME                 DEPARTMENT_ID
+------------------------- -------------
+Jacobs                               40
+Atkinson                             50
+Bell                                 50
+Bissot                               50
+Bull                                 50
+Cabrio                               50
+Chung                                50
+Davies                               50
+Dellinger                            50
+Dilly                                50
+Everett                              50
+Feeney                               50
+Fleaur                               50
+Fripp                                50
+Gee                                  50
+Geoni                                50
+Grant                                50
+Jones                                50
+Kaufling                             50
+Ladwig                               50
+Landry                               50
+Mallin                               50
+Markle                               50
+Marlow                               50
+Matos                                50
+McLeod                               50
+Mikkilineni                          50
+Mourgos                              50
+Nayer                                50
+OConnell                             50
+Olson                                50
+Patel                                50
+Perkins                              50
+Philtanker                           50
+Rajs                                 50
+Rogers                               50
+Sarchand                             50
+Seo                                  50
+Stiles                               50
+Sullivan                             50
+Taylor                               50
+Vargas                               50
+Venzl                                50
+Vollman                              50
+Walsh                                50
+Weiss                                50
+Jackson                              60
+James                                60
+Miller                               60
+Nguyen                               60
+Williams                             60
+Brown                                70
+Abel                                 80
+Ande                                 80
+Banda                                80
+Bates                                80
+Bernstein                            80
+Bloom                                80
+Cambrault                            80
+Cambrault                            80
+Doran                                80
+Errazuriz                            80
+Fox                                  80
+Greene                               80
+Hall                                 80
+Hutton                               80
+Johnson                              80
+King                                 80
+Kumar                                80
+Lee                                  80
+Livingston                           80
+Marvins                              80
+McEwen                               80
+Olsen                                80
+Ozer                                 80
+Partners                             80
+Sewall                               80
+Singh                                80
+Smith                                80
+Smith                                80
+Sully                                80
+Taylor                               80
+Tucker                               80
+Tuvault                              80
+Vishney                              80
+Zlotkey                              80
+Garcia                               90
+King                                 90
+Yang                                 90
+Chen                                100
+Faviet                              100
+Gruenberg                           100
+Popp                                100
+Sciarra                             100
+Urman                               100
+Gietz                               110
+Higgins                             110
+Grant
+
+98 rows selected.
+
+
+===== I.3 DEFECTUOSA =====
+
+DEPARTMENT_NAME                EMPLOYEE_COUNT
+------------------------------ --------------
+Accounting                                  2
+Administration                              1
+Benefits                                    1
+Construction                                1
+Contracting                                 1
+Control And Credit                          1
+Corporate Tax                               1
+Executive                                   3
+Finance                                     6
+Government Sales                            1
+IT                                          5
+IT Helpdesk                                 1
+IT Support                                  1
+Manufacturing                               1
+NOC                                         1
+Operations                                  1
+Payroll                                     1
+Purchasing                                  6
+Recruiting                                  1
+Retail Sales                                1
+Shareholder Services                        1
+Shipping                                   45
+Treasury                                    1
+
+23 rows selected.
+
+
+===== I.3 CORREGIDA =====
+
+DEPARTMENT_NAME                EMPLOYEE_COUNT
+------------------------------ --------------
+Accounting                                  2
+Administration                              1
+Benefits                                    0
+Construction                                0
+Contracting                                 0
+Control And Credit                          0
+Corporate Tax                               0
+Executive                                   3
+Finance                                     6
+Government Sales                            0
+IT                                          5
+IT Helpdesk                                 0
+IT Support                                  0
+Manufacturing                               0
+NOC                                         0
+Operations                                  0
+Payroll                                     0
+Purchasing                                  6
+Recruiting                                  0
+Retail Sales                                0
+Shareholder Services                        0
+Shipping                                   45
+Treasury                                    0
+
+23 rows selected.
+
+
+===== I.4 DEFECTUOSA =====
+
+DEPARTMENT_ID LAST_NAME                 MAX_SALARY
+------------- ------------------------- ----------
+           10 Whalen                          4400
+           20 Martinez                       13000
+           20 Davis                           6000
+           30 Li                             11000
+           30 Khoo                            3100
+           30 Baida                           2900
+           30 Tobias                          2800
+           30 Himuro                          2600
+           30 Colmenares                      2500
+           40 Jacobs                          6500
+           50 Fripp                           8200
+           50 Weiss                           8000
+           50 Kaufling                        7900
+           50 Vollman                         6500
+           50 Mourgos                         5800
+           50 Sarchand                        4200
+           50 Bull                            4100
+           50 Bell                            4000
+           50 Everett                         3900
+           50 Chung                           3800
+           50 Ladwig                          3600
+           50 Dilly                           3600
+           50 Rajs                            3500
+           50 Dellinger                       3400
+           50 Mallin                          3300
+           50 Bissot                          3300
+           50 McLeod                          3200
+           50 Nayer                           3200
+           50 Taylor                          3200
+           50 Stiles                          3200
+           50 Davies                          3100
+           50 Fleaur                          3100
+           50 Walsh                           3100
+           50 Feeney                          3000
+           50 Cabrio                          3000
+           50 Rogers                          2900
+           50 Venzl                           2900
+           50 Jones                           2800
+           50 Atkinson                        2800
+           50 Geoni                           2800
+           50 Mikkilineni                     2700
+           50 Seo                             2700
+           50 OConnell                        2600
+           50 Matos                           2600
+           50 Grant                           2600
+           50 Marlow                          2500
+           50 Perkins                         2500
+           50 Sullivan                        2500
+           50 Vargas                          2500
+           50 Patel                           2500
+           50 Landry                          2400
+           50 Gee                             2400
+           50 Philtanker                      2200
+           50 Markle                          2200
+           50 Olson                           2100
+           60 James                           9000
+           60 Miller                          6000
+           60 Williams                        4800
+           60 Jackson                         4800
+           60 Nguyen                          4200
+           70 Brown                          10000
+           80 Singh                          14000
+           80 Partners                       13500
+           80 Errazuriz                      12000
+           80 Ozer                           11500
+           80 Cambrault                      11000
+           80 Abel                           11000
+           80 Vishney                        10500
+           80 Zlotkey                        10500
+           80 Bloom                          10000
+           80 King                           10000
+           80 Tucker                         10000
+           80 Fox                             9600
+           80 Bernstein                       9500
+           80 Sully                           9500
+           80 Greene                          9500
+           80 McEwen                          9000
+           80 Hall                            9000
+           80 Hutton                          8800
+           80 Taylor                          8600
+           80 Livingston                      8400
+           80 Smith                           8000
+           80 Olsen                           8000
+           80 Doran                           7500
+           80 Bates                           7300
+           80 Marvins                         7200
+           80 Sewall                          7000
+           80 Tuvault                         7000
+           80 Lee                             6800
+           80 Ande                            6400
+           80 Banda                           6200
+           80 Johnson                         6200
+           80 Kumar                           6100
+           90 King                           24000
+           90 Yang                           17000
+           90 Garcia                         17000
+          100 Gruenberg                      12008
+          100 Faviet                          9000
+          100 Chen                            8200
+          100 Urman                           7800
+          100 Sciarra                         7700
+          100 Popp                            6900
+          110 Higgins                        12008
+          110 Gietz                           8300
+              Grant                           7000
+
+105 rows selected.
+
+
+===== I.4 CORREGIDA =====
+
+DEPARTMENT_ID LAST_NAME                     SALARY
+------------- ------------------------- ----------
+           10 Whalen                          4400
+           20 Martinez                       13000
+           30 Li                             11000
+           40 Jacobs                          6500
+           50 Fripp                           8200
+           60 James                           9000
+           70 Brown                          10000
+           80 Singh                          14000
+           90 King                           24000
+          100 Gruenberg                      12008
+          110 Higgins                        12008
+              Grant                           7000
+
+12 rows selected.
+
+
+===== I.5 DEFECTUOSA =====
+
+PROMEDIO_COMISION
+-----------------
+       .222857143
+
+
+===== I.5 CORREGIDA =====
+
+PROMEDIO_COMISION
+-----------------
+      .0728971963
+
+
+===== CUADRO DE DIAGNOSTICO BLOQUE I =====
+
+CON ENUNCIADO                                                     ERROR_DETECTADO
+--- ------------------------------------------------------------- --------------------------------------------------------------------------------------------------------
+MECANISMO
+------------------------------------------------------------------------------------------------------------------
+EVIDENCIA_CORRECCION
+---------------------------------------------------------------------------------------------------------------
+I.1 Departamentos con cantidad de empleados, incluidos los vacios Departamentos vacios muestran employee_count = 1 en vez de 0
+COUNT(*) cuenta filas; el LEFT JOIN igual genera 1 fila con NULL por departamento vacio
+Corregido con COUNT(e.employee_id), que ignora los NULL
+
+I.2 Empleados que no trabajan en los departamentos 10, 20 ni 30   Los empleados sin departamento (department_id IS NULL) no aparecen
+NULL NOT IN (...) evalua UNKNOWN, asi que esas filas nunca cumplen la condicion
+Corregido agregando OR department_id IS NULL
+
+I.3 Departamentos en Estados Unidos con cantidad de empleados     Dos errores: COUNT(*) en vez de COUNT(e.employee_id); y se pierden departamentos de EE.UU. sin empleados
+COUNT(*) cuenta filas NULL del LEFT JOIN; ademas el WHERE sobre la tabla externa degrada el LEFT JOIN a INNER JOIN
+Corregido con COUNT(e.employee_id) y manteniendo el filtro de pais sobre locations, no sobre employees
+
+I.4 Empleado mejor pagado de cada departamento                    Devuelve varias filas por departamento en vez de solo el mejor pagado
+GROUP BY department_id, last_name crea un grupo por cada empleado, no por departamento
+Corregido con RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) y filtro rk = 1 en consulta externa
+
+I.5 Promedio de comision contando como cero a quien no la recibe  El promedio sale mas alto de lo real
+AVG() ignora los NULL, promediando solo entre quienes tienen comision
+Corregido con AVG(NVL(commission_pct, 0))
+
+
