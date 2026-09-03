@@ -37,7 +37,7 @@ SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY(NULL,NULL,'BASIC +COST +ROWS'));
 -- #####################################################################
 -- 2. B-tree no único
 -- #####################################################################
-CREATE INDEX ix_venta_cliente ON venta (id_cliente);
+CREATE INDEX idx_venta_cliente ON venta (id_cliente);
 EXEC DBMS_STATS.GATHER_TABLE_STATS(USER,'VENTA',cascade=>TRUE);
 
 EXPLAIN PLAN FOR SELECT * FROM venta WHERE id_cliente = 4321;
@@ -49,7 +49,6 @@ SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY(NULL,NULL,'BASIC +COST +ROWS +PREDICATE')
 SELECT index_name, blevel AS altura, leaf_blocks, distinct_keys, clustering_factor
   FROM user_indexes WHERE table_name = 'VENTA' ORDER BY 1;
 --> blevel 2 para medio millón de filas: tres saltos hasta cualquier valor.
-
 
 -- #####################################################################
 -- 3. Cuándo el B-tree NO conviene
